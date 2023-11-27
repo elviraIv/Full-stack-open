@@ -5,20 +5,28 @@ const Button = ({ text, handleClick }) => {
 };
 
 const Statistics = ({ good, neutral, bad }) => {
-  let all = good + neutral + bad;
-  let score = (1 * good) + (-1 * bad);
+  let all = Number(good + neutral + bad);
+  let score = 1 * good + -1 * bad;
   let average = score / all;
-  let positive = good / all * 100
+  let positive = (good / all) * 100;
+  const hasFeedback = all > 0;
 
   return (
     <>
       <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {all}</p>
-      <p>average {average}</p>
-      <p>positive {positive} % </p>
+
+      {hasFeedback ? (
+        <>
+          <p>good {good}</p>
+          <p>neutral {neutral}</p>
+          <p>bad {bad}</p>
+          <p>all {all}</p>
+          <p>average {average}</p>
+          <p>positive {positive} % </p>
+        </>
+      ) : (
+        <p>No feedback given</p>
+      )}
     </>
   );
 };
