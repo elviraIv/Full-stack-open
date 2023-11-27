@@ -39,7 +39,6 @@ const App = () => {
       <Button text="good" handleClick={goodFeedbackHandler} />
       <Button text="neutral" handleClick={neutralFeedbackHandler} />
       <Button text="bad" handleClick={badFeedbackHandler} />
-
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
