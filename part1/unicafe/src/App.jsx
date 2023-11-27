@@ -6,10 +6,10 @@ const Button = ({ text, handleClick }) => {
 
 const StatisticLine = ({ text, value }) => {
   return (
-    <p>
-      {" "}
-      {text} {value}
-    </p>
+    <tr>
+      <td>{text}</td>
+      <td>{value}</td>
+    </tr>
   );
 };
 
@@ -29,7 +29,7 @@ const App = () => {
   const badFeedbackHandler = () => setBad(bad + 1);
 
   return (
-    <div>
+    <>
       <h1>give feedback</h1>
       <Button text="good" handleClick={goodFeedbackHandler} />
       <Button text="neutral" handleClick={neutralFeedbackHandler} />
@@ -37,18 +37,18 @@ const App = () => {
       <h1>statistics</h1>
 
       {hasFeedback ? (
-        <>
+        <table>
           <StatisticLine text="good" value={good} />
           <StatisticLine text="neutral" value={neutral} />
           <StatisticLine text="bad" value={bad} />
           <StatisticLine text="all" value={all} />
           <StatisticLine text="average" value={average} />
           <StatisticLine text="positive" value={`${positive} %`} />
-        </>
+        </table>
       ) : (
         <p>No feedback given</p>
       )}
-    </div>
+    </>
   );
 };
 
