@@ -15,6 +15,8 @@ const Anecdotes = ({ anecdotes, points }) => {
   );
 };
 
+
+
 const MostFavouriteAnecdote = ({ points, anecdotes }) => {
   let favourite = Math.max(...points);
   let position = points.indexOf(favourite);
