@@ -1,9 +1,9 @@
-const Filter = ({onChange}) => {
+const Filter = ({setFilter}) => {
   return (
     <div>
       filter shown with:{" "}
       <input
-        onChange={onChange}
+        onChange={({target})=> setFilter(target.value)}
         placeholder="enter your filter parameter..."
       />
     </div>

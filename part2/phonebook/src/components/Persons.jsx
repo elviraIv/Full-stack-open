@@ -1,18 +1,19 @@
-const Persons = ({ persons, search }) => {
+import Person from "./Person";
+
+const Persons = ({ persons, filter, deleteHandler }) => {
+  const personsToShow = 
+  filter === ''
+    ? persons
+    : persons.filter((person) =>
+        person.name.toLowerCase().includes(filter.toLowerCase())
+      )
+
   return (
-    <div>
-      {persons
-        .filter((person) => {
-          return search.toLowerCase() === ""
-            ? person
-            : person.name.toLowerCase().includes(search);
-        })
-        .map((person) => (
-          <div key={person.name}>
-            {person.name} {person.number}
-          </div>
-        ))}
-    </div>
+    <>
+      {personsToShow.map((person) => (
+        <Person key={person.id} person={person} deleteHandler={deleteHandler} />
+      ))}
+    </>
   );
 };
 

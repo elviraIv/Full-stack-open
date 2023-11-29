@@ -8,11 +8,11 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumebr, setNewNumebr] = useState("");
-  const [search, setSearch] = useState("");
+  const [filter, setFilter] = useState("");
 
   useEffect(() => {
-    contactService.getAll().then((persons) => {
-      setPersons(persons);
+    contactService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
     });
   }, []);
 
@@ -45,10 +45,23 @@ const App = () => {
     setNewNumebr("");
   };
 
+  const deleteHandler = (id) => {
+    const person = persons.find((p) => p.id === id)
+   
+    if(window.confirm(`Delete ${person.name}?`))
+    contactService.deleteContact(id).then(() => {
+      contactService.getAll().then((persons) => {
+        setPersons(persons)
+      })
+    });
+
+   
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter onChange={(e) => setSearch(e.target.value)} />
+      <Filter setFilter={setFilter}/>
       <h3>Add a new</h3>
       <PersonForm
         nameValue={newName}
@@ -56,9 +69,10 @@ const App = () => {
         numberValue={newNumebr}
         onChangeNumber={numberChangeHandler}
         onClick={submitNameHandler}
+        
       />
       <h3>Numbers</h3>
-      <Persons persons={persons} search={search} />
+      <Persons persons={persons} filter={filter} deleteHandler={deleteHandler} />
     </div>
   );
 };
