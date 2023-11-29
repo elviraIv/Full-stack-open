@@ -29,11 +29,17 @@ const App = () => {
     const noteObj = {
       content: newNote,
       important: Math.random() < 0.5,
-      id: notes.lenght + 1,
+      
     };
 
-    setNotes(notes.concat(noteObj));
-    setNewNote("");
+    axios
+          .post('http://localhost:3000/notes', noteObj)
+          .then(response => {
+            setNotes(notes.concat(response.data))
+            setNewNote('')
+          })
+
+  
   };
 
   const notesToShow = showAll ? notes : notes.filter((note) => note.important);
