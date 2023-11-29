@@ -27,17 +27,23 @@ const App = () => {
 
   const submitNameHandler = (e) => {
     e.preventDefault();
-    const newNameObj = {
+    const noteObj = {
       name: newName,
       number: newNumebr,
     };
+
+    axios
+          .post('http://localhost:3000/persons', {noteObj})
+          .then(responese => {
+            console.log(responese);
+          })
 
     if (persons.find((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
       return;
     }
 
-    setPersons(persons.concat(newNameObj));
+    setPersons(persons.concat(noteObj));
     setNewName("");
     setNewNumebr("");
   };
