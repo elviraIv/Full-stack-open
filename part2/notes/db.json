@@ -3,31 +3,31 @@
     {
       "id": 1,
       "content": "HTML is easy",
-      "important": false
+      "important": true
     },
     {
       "id": 2,
       "content": "Browser can execute only JavaScript",
-      "important": false
+      "important": true
     },
     {
       "id": 3,
       "content": "GET and POST are the most important methods of HTTP protocol",
-      "important": false
+      "important": true
     },
     {
       "content": "Hello",
-      "important": false,
+      "important": true,
       "id": 4
     },
     {
       "content": "Hello2",
-      "important": false,
+      "important": true,
       "id": 5
     },
     {
       "content": "a new note",
-      "important": false,
+      "important": true,
       "id": 6
     },
     {
@@ -49,6 +49,51 @@
       "content": "Laundry",
       "important": false,
       "id": 10
+    },
+    {
+      "content": "a new noteeeeee",
+      "important": true,
+      "id": 11
+    },
+    {
+      "content": "a new note",
+      "important": true,
+      "id": 12
+    },
+    {
+      "content": "",
+      "important": true,
+      "id": 13
+    },
+    {
+      "content": "a new noteeeefegege",
+      "important": true,
+      "id": 14
+    },
+    {
+      "content": "a new note5656",
+      "important": true,
+      "id": 15
+    },
+    {
+      "content": "elvira",
+      "important": false,
+      "id": 16
+    },
+    {
+      "content": "test",
+      "important": true,
+      "id": 17
+    },
+    {
+      "content": "eee",
+      "important": true,
+      "id": 18
+    },
+    {
+      "content": "sgs",
+      "important": false,
+      "id": 19
     }
   ]
 }
