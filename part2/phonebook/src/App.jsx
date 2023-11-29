@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from 'axios'
+import contactService from "./services/contactService";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
@@ -10,13 +10,11 @@ const App = () => {
   const [newNumebr, setNewNumebr] = useState("");
   const [search, setSearch] = useState("");
 
-  useEffect(()=> {
-    axios 
-          .get(' http://localhost:3000/persons')
-          .then(response => {
-            setPersons(response.data)
-          })
-  },[])
+  useEffect(() => {
+    contactService.getAll().then((persons) => {
+      setPersons(persons);
+    });
+  }, []);
 
   const nameChangeHandler = (e) => {
     setNewName(e.target.value);
@@ -32,18 +30,17 @@ const App = () => {
       number: newNumebr,
     };
 
-    axios
-          .post('http://localhost:3000/persons', {noteObj})
-          .then(responese => {
-            console.log(responese);
-          })
-
     if (persons.find((person) => person.name === newName)) {
       alert(`${newName} is already added to phonebook`);
+      setNewName("");
+      setNewNumebr("");
       return;
     }
 
-    setPersons(persons.concat(noteObj));
+    contactService.create(noteObj).then((returnedObj) => {
+      setPersons(persons.concat(returnedObj));
+    });
+
     setNewName("");
     setNewNumebr("");
   };
