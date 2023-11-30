@@ -22,9 +22,24 @@ let persons = [
 ];
 
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
 
 app.use(express.json());
+app.use(morgan('tiny'))
+
+morgan.token('body', request => JSON.stringify(request.body))
+
+
+
+const requestLogger = (request, response, next) => {
+  console.log("Method:", request.method);
+  console.log("Path:  ", request.path);
+  console.log("Body:  ", request.body);
+  console.log("---");
+  next();
+};
+app.use(requestLogger);
 
 app.get("/api/persons", (request, response) => {
   response.json(persons);
@@ -54,29 +69,34 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end();
 });
 
-const generateId = () =>{
-return Math.floor(Math. random() * 1000) + 1;
-}
+const generateId = () => {
+  return Math.floor(Math.random() * 1000) + 1;
+};
 
-app.post('/api/persons', (request, response) => {
-    const body = request.body
+app.post("/api/persons", (request, response) => {
+  const body = request.body;
 
-    if(!body.name || ! body.number){
-        return response.status(400).json({
-            error:'content is missing'
-        })
-    }
+  if (!body.name || !body.number) {
+    return response.status(400).json({
+      error: "content is missing",
+    });
+  }
 
-    const person = {
-        name:body.name,
-        number:body.number,
-        id:generateId()
-    }
+  const person = {
+    name: body.name,
+    number: body.number,
+    id: generateId(),
+  };
 
-    persons = persons.concat(person)
+  persons = persons.concat(person);
+  response.json(person);
+});
 
-    response.json(person)
-})
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: "unknown endpoint" });
+};
+
+app.use(unknownEndpoint);
 
 const PORT = 3000;
 app.listen(PORT, () => {
