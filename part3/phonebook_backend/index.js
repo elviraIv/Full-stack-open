@@ -27,6 +27,13 @@ const app = express();
 
 const Person = require("./models/person");
 
+const errorHandler = (error, request, response, next) => {
+  console.log(error.message);
+  if (error.name === "CastError") {
+    return response.status(400).send({error:'malformatted id'})
+  }
+
+}
 app.use(express.json());
 app.use(morgan("tiny"));
 

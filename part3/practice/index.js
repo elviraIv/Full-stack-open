@@ -9,7 +9,7 @@ const errorHandler = (error, request, response, next) => {
   console.log(error.message);
 
   if (error.name === "CastError") {
-    return respnse.status(400).send({ error: "malformatted id" });
+    return response.status(400).send({ error: "malformatted id" });
   }
 
   next(error);
