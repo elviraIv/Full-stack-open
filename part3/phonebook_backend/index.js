@@ -20,17 +20,17 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
-require('dotenv').config()
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
 
-const Person = require('./models/person')
+const Person = require("./models/person");
 
 app.use(express.json());
-app.use(morgan('tiny'))
+app.use(morgan("tiny"));
 
-morgan.token('body', request => JSON.stringify(request.body))
+morgan.token("body", (request) => JSON.stringify(request.body));
 
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
@@ -44,8 +44,8 @@ app.use(requestLogger);
 
 app.get("/api/persons", (request, response) => {
   Person.find({}).then((persons) => {
-    response.json(persons)
-  })
+    response.json(persons);
+  });
 });
 
 app.get("/info", (request, response) => {
@@ -72,10 +72,6 @@ app.delete("/api/persons/:id", (request, response) => {
   response.status(204).end();
 });
 
-const generateId = () => {
-  return Math.floor(Math.random() * 1000) + 1;
-};
-
 app.post("/api/persons", (request, response) => {
   const body = request.body;
 
@@ -85,14 +81,14 @@ app.post("/api/persons", (request, response) => {
     });
   }
 
-  const person = {
+  const person = new Person({
     name: body.name,
     number: body.number,
-    id: generateId(),
-  };
+  });
 
-  persons = persons.concat(person);
-  response.json(person);
+  person.save().then((savedPerson) => {
+    response.json(savedPerson);
+  });
 });
 
 const unknownEndpoint = (request, response) => {
