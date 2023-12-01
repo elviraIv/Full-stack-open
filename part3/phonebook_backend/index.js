@@ -20,18 +20,17 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
-
+require('dotenv').config()
 const express = require("express");
 const morgan = require("morgan");
 const app = express();
 
+const Person = require('./models/person')
 
 app.use(express.json());
 app.use(morgan('tiny'))
 
 morgan.token('body', request => JSON.stringify(request.body))
-
-
 
 const requestLogger = (request, response, next) => {
   console.log("Method:", request.method);
@@ -40,10 +39,13 @@ const requestLogger = (request, response, next) => {
   console.log("---");
   next();
 };
+
 app.use(requestLogger);
 
 app.get("/api/persons", (request, response) => {
-  response.json(persons);
+  Person.find({}).then((persons) => {
+    response.json(persons)
+  })
 });
 
 app.get("/info", (request, response) => {
