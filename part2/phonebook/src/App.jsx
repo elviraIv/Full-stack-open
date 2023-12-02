@@ -3,12 +3,15 @@ import contactService from "./services/contactService";
 import Filter from "./components/Filter";
 import PersonForm from "./components/PersonForm";
 import Persons from "./components/Persons";
+import Notification from "./components/Notification";
+import "./App.css";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumebr, setNewNumebr] = useState("");
   const [filter, setFilter] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     contactService.getAll().then((initialPersons) => {
@@ -52,9 +55,13 @@ const App = () => {
       return;
     }
 
-    contactService.create(noteObj).then((returnedObj) => {
-      setPersons(persons.concat(returnedObj));
-    });
+    contactService
+      .create(noteObj)
+      .then((returnedObj) => {
+        setPersons(persons.concat(returnedObj));
+        setMessage(`Added ${noteObj.name} to phonebook`);
+      })
+      .catch((error) => setMessage(error.response.message.data));
 
     setNewName("");
     setNewNumebr("");
@@ -74,6 +81,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter setFilter={setFilter} />
       <h3>Add a new</h3>
       <PersonForm
