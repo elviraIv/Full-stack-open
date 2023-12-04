@@ -114,7 +114,7 @@ const unknownEndpoint = (request, response) => {
 app.use(unknownEndpoint);
 app.use(errorHandler);
 
-const PORT = 3000;
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
