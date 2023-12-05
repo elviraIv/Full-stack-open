@@ -1,16 +1,15 @@
 const config = require('./utils/config')
 const express = require('express')
-require('express-async-errors')
 const app = express()
 const cors = require('cors')
-const notesRouter = require('./controllers/notes')
-const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
-const supertest = require('supertest')
-const app = require('../app')
+require('express-async-errors')
 
-api = supertest(api)
+const notesRouter = require('./contollers/notes')
+const usersRouter = require('./contollers/users')
+const loginRouter = require('./contollers/login')
+const middleware = require('./utils/middleware')
 
 mongoose.set('strictQuery', false)
 
@@ -25,11 +24,13 @@ mongoose.connect(config.MONGODB_URI)
   })
 
 app.use(cors())
-app.use(express.static('dist'))
+app.use(express.static('build'))
 app.use(express.json())
 app.use(middleware.requestLogger)
 
+app.use('/api/login', loginRouter)
 app.use('/api/notes', notesRouter)
+app.use('/api/users', usersRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
