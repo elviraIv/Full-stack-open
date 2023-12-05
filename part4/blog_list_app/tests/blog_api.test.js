@@ -59,20 +59,20 @@ describe("deletion of a blog post", async () => {
       .expect("Content-Type", /application\/json/);
   });
 
-  test('should succeed with status 204 if id is valid', async () => { 
-    const blogsAtStart = helper.blogsInDb
-    const blogToDelete = blogsAtStart[0]
+  test("should succeed with status 204 if id is valid", async () => {
+    const blogsAtStart = helper.blogsInDb;
+    const blogToDelete = blogsAtStart[0];
 
-    await api   
-        .delete(`api/blogs/${blogToDelete.id}`)
-        .expect(204)
-   })
+    await api.delete(`api/blogs/${blogToDelete.id}`).expect(204);
 
-   const blogsAtEnd = await Blog.find({}).populate('user')
-   expect(blogsAtEnd).toHaveLength(blogsAtStart.length - 1)
+    const blogsAtEnd = await Blog.find({}).populate("user");
+    expect(blogsAtEnd).toHaveLength(blogsAtStart.length - 1);
 
-   const titles = blogsAtEnd.map((blog) => blog.title)
-   expect(titles).not.toContain(blogToDelete.title)
+    const titles = blogsAtEnd.map((blog) => blog.title);
+    expect(titles).not.toContain(blogToDelete.title);
+  });
+
+  
 });
 
 afterAll(() => {
