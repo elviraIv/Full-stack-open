@@ -8,6 +8,8 @@ require('express-async-errors')
 
 const notesRouter = require('./contollers/notes')
 const usersRouter = require('./contollers/users')
+const testingRouter = require('./contollers/testing')
+
 const loginRouter = require('./contollers/login')
 const middleware = require('./utils/middleware')
 
@@ -31,6 +33,11 @@ app.use(middleware.requestLogger)
 app.use('/api/login', loginRouter)
 app.use('/api/notes', notesRouter)
 app.use('/api/users', usersRouter)
+
+if (process.env.NODE_ENV === 'test') {
+  const testingRouter = require('./controllers/testing')
+  app.use('/api/testing', testingRouter)
+}
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
