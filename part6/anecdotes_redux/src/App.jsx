@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import AnecdoteForm from "./components/AnecdoteForm ";
 
 const App = () => {
   const anecdotes = useSelector((state) => state);
@@ -25,13 +26,7 @@ const App = () => {
           </div>
         </div>
       ))}
-      <h2>create new</h2>
-      <form>
-        <div>
-          <input />
-        </div>
-        <button>create</button>
-      </form>
+      <AnecdoteForm />
     </div>
   );
 };

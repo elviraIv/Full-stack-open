@@ -36,10 +36,26 @@ const reducer = (state = initialState, action) => {
         anecdote.id !== id ? anecdote : changedAnecdote
       );
     }
+    case 'NEW_ANECDOTE': {
+      return [... state, action.payload]
+    }
 
     default:
       return state;
   }
+};
+
+const generateId = () => Number((Math.random() * 1000000).toFixed(0));
+
+export const createAnecdote = (content) => {
+  return {
+    type: "NEW_ANECDOTE",
+    payload: {
+      content: content,
+      votes: 0,
+      id: generateId(),
+    },
+  };
 };
 
 export default reducer;
