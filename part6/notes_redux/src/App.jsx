@@ -1,27 +1,28 @@
-import NewNote from "./components/NewNote";
-import Notes from "./components/Notes";
-import VisibilityFilter from "./components/VisibilityFilter";
-import { createNote, toggleImportanceOf } from "./reducers/noteReducer";
-import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from 'react'
+import NewNote from './components/NewNote'
+import Notes from './components/Notes'
+import VisibilityFilter from './components/VisibilityFilter'
+
+import noteService from './services/notes'
+import { setNotes } from './reducers/noteReducer'
+import { useDispatch } from 'react-redux'
 
 const App = () => {
-  const dispatch = useDispatch();
-  const notes = useSelector((state) => state);
 
-  const addNote = (event) => {
-    event.preventDefault();
-    const content = event.target.note.value;
-    event.target.note.value = "";
-    dispatch(createNote(content));
-  };
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    noteService
+      .getAll().then(notes => dispatch(setNotes(notes)))
+  }, [])
 
   return (
     <div>
       <NewNote />
-      <Notes />
       <VisibilityFilter />
+      <Notes />
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
