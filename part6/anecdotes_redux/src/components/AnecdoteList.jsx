@@ -7,23 +7,19 @@ const AnecdoteList = () => {
 
   const vote = (anecdote) => {
     dispatch(addVote(anecdote.id));
-    dispatch(setNotification(`You voted ${anecdote.content}`))
-    
-    
+    dispatch(setNotification(`You voted ${anecdote.content}`));
   };
   return (
     <div>
-      {anecdotes
-        
-        .map((anecdote) => (
-          <div key={anecdote.id}>
-            <div>{anecdote.content}</div>
-            <div>
-              has {anecdote.votes}
-              <button onClick={() => vote(anecdote)}>vote</button>
-            </div>
+      {anecdotes.map((anecdote) => (
+        <div key={anecdote.id}>
+          <div>{anecdote.content}</div>
+          <div>
+            has {anecdote.votes}
+            <button onClick={() => vote(anecdote)}>vote</button>
           </div>
-        ))}
+        </div>
+      ))}
     </div>
   );
 };
