@@ -8,6 +8,7 @@ import {
   Route,
   Link,
 } from "react-router-dom";
+import { useField } from "./hooks";
 
 const padding = {
   paddingRight: 5,
@@ -77,9 +78,12 @@ const Footer = () => (
 );
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState("");
-  const [author, setAuthor] = useState("");
-  const [info, setInfo] = useState("");
+ 
+  const { reset: resetContent, ...content } = useField("content");
+  const { reset: resetAuthor, ...author } = useField("author");
+  const { reset: resetInfo, ...info } = useField("info");
+  console.log(content);
+  console.log(author);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -90,36 +94,37 @@ const CreateNew = (props) => {
       votes: 0,
     });
   };
+  const handleReset = (e) => {
+    e.preventDefault();
+    resetContent();
+    resetAuthor();
+    resetInfo();
+  };
 
   return (
     <div>
       <h2>create a new anecdote</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          content
+          content:
           <input
-            name="content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
+            {...content}
           />
         </div>
         <div>
           author
           <input
-            name="author"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            {...author}
           />
         </div>
         <div>
           url for more info
           <input
-            name="info"
-            value={info}
-            onChange={(e) => setInfo(e.target.value)}
+            {...info}
           />
         </div>
         <button>create</button>
+        <button onClick={handleReset}>reset</button>
       </form>
     </div>
   );
