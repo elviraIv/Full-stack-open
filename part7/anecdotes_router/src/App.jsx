@@ -1,22 +1,39 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  useParams,
+  Routes,
+  Route,
+  Link,
+} from "react-router-dom";
 
-
-  const padding = {
-    paddingRight: 5,
-  };
-
+const padding = {
+  paddingRight: 5,
+};
 
 const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
       {anecdotes.map((anecdote) => (
-        <li key={anecdote.id}>{anecdote.content}</li>
+        <li key={anecdote.id}>
+          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+        </li>
       ))}
     </ul>
   </div>
 );
+
+const Anecdote = ({ anecdotes }) => {
+  const id = useParams().id;
+  const anecdote = anecdotes.find((a) => a.id === Number(id));
+  return (
+    <div>
+      <h3>{anecdote.content}</h3>
+      <span>has {anecdote.votes} votes</span>
+    </div>
+  );
+};
 
 const About = () => (
   <div>
@@ -155,6 +172,10 @@ const App = () => {
 
         <h1>Software anecdotes</h1>
         <Routes>
+          <Route
+            path="/anecdotes/:id"
+            element={<Anecdote anecdotes={anecdotes} />}
+          />
           <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
           <Route path="/create" element={<CreateNew />} />
           <Route path="/about" element={<About />} />
