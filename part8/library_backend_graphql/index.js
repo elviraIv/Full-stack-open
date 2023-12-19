@@ -85,7 +85,8 @@ const typeDefs = `
     bookCount: Int
     authorCount: Int
     allAuthors: [Author!]!
-    allBooks(author: String, genre: String): [Book]
+    
+    allBooks: [Book!]!
   }
 
   type Mutation {
@@ -120,13 +121,11 @@ const typeDefs = `
 
 const resolvers = {
   Query: {
-    bookCount: () => books.length,
+    allBooks: () => books,
     allAuthors: () => authors,
+    bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: (root, args) =>
-      books
-        .filter((b) => b.author === args.author)
-        .filter((b) => b.genres.find((g) => g === args.genre) === args.genre),
+    // allBooks: (root, args) => books.filter((b) => b.author === args.author),
   },
   Mutation: {
     addBook: (root, args) => {
