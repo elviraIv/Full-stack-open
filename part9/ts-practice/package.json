@@ -6,6 +6,7 @@
   "scripts": {
     "multiply": "ts-node multiplier.ts",
     "calculate": "ts-node calculator.ts",
+    "calculateBmi": "ts-node calculateBmi.ts",
     "ts-node": "ts-node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
