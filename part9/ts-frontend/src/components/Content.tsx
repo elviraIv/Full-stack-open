@@ -1,10 +1,8 @@
 import React from "react";
+import { CoursePartProp } from "../types";
 
-interface coursePartProp {
-  name: string;
-  exerciseCount: number;
-}
-const Content = ({ courseParts }: coursePartProp[]) => {
+
+const Content = ({ courseParts }: CoursePartProp[]) => {
   return (
     <div>
       {courseParts.map((course) => (
